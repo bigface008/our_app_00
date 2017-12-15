@@ -5,6 +5,35 @@ import React from 'react';
 
 let yeomanImage = require('../images/yeoman.png');
 
+class Washer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+
+    };
+  }
+
+  render() {
+    return (
+      <div className="Washer">
+
+      </div>
+    );
+  }
+}
+
+class List extends React.Component {
+  render() {
+    return (
+      <div className="List">
+        <Washer />
+        <Washer />
+        <Washer />
+      </div>
+    );
+  }
+}
+
 class AppComponent extends React.Component {
   render() {
     return (
