@@ -12,7 +12,8 @@ class Washer extends React.Component {
       // 0 - not being used
       // 1 - someone else is using it
       // 2 - you are using it
-      user: 0
+      user: 0,
+      text: 'Not being used.'
     };
     this.handleClickOn = this.handleClickOn.bind(this);
     // this.handleClickOff = this.handleClickOff.bind(this);
@@ -29,9 +30,9 @@ class Washer extends React.Component {
       alert('You\'ve already turn the washer on.');
       return;
     }
-    alert('On');
     this.setState({
-      user: 2
+      user: 2,
+      text: 'Being used.'
     });
     return;
   }
@@ -54,7 +55,10 @@ class Washer extends React.Component {
     return (
       <div className="Washer">
         Washer No.{this.props.order}
-        <button className="On" onClick={this.handleClickOn} >On</button>
+        <p>
+          {this.state.text}
+          <button className="On" onClick={this.handleClickOn} >On</button>
+        </p>
         {/* <button className="Off" onClick={this.handleClickOff}>Off</button> */}
       </div>
     );
@@ -65,9 +69,9 @@ class List extends React.Component {
   render() {
     return (
       <div className="List">
-        <Washer order={0}/>
-        <Washer order={1}/>
-        <Washer order={2}/>
+        <Washer order={0} />
+        <Washer order={1} />
+        <Washer order={2} />
       </div>
     );
   }
