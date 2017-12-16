@@ -5,7 +5,8 @@ import React from 'react';
 
 // let yeomanImage = require('../images/yeoman.png');
 let timeArray = [5, 45, 45];
-let users = [0, 0, 0];
+const EXP_MIN = 1000;
+// let users = [0, 0, 0];
 
 class Washer extends React.Component {
   constructor() {
@@ -20,23 +21,28 @@ class Washer extends React.Component {
     };
     this.handleClickOn = this.handleClickOn.bind(this);
     this.timeOn = this.timeOn.bind(this);
+    this.tick = this.tick.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     user: users[this.props.order]
-  //   });
-  // }
+  componentWillUnmount() {
+    if (this.timer) clearTimeout(this.timer);
+    if (this.timerID) clearInterval(this.timerID);
+  }
 
   timeOn() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
     let mins = timeArray[this.props.order];
-    let exp = 1000;
+    this.timerID = setInterval(() => this.tick(), EXP_MIN);
     this.timer = setTimeout(() => {
-      alert('SB');
-    }, exp * mins);
+      this.setState({
+        text: 'You can get your clothes.'
+      });
+    }, EXP_MIN * mins);
+  }
+
+  tick() {
+    this.setState((prevState) => {
+      time: prevState.time + 1
+    })
   }
 
   handleClickOn(e) {
@@ -68,6 +74,9 @@ class Washer extends React.Component {
         <p>
           {this.state.text}
           <button className="On" onClick={this.handleClickOn} >On</button>
+        </p>
+        <p className="Clock">
+          Time: {this.state.time}
         </p>
       </div>
     );
