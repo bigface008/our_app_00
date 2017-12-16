@@ -3,7 +3,7 @@ require('styles/App.css');
 
 import React from 'react';
 
-let timeArray = [5, 45, 45];
+let timeArray = [5, 45, 45]; // should be changed to 45 * 3
 const EXP_MIN = 1000; // should be changed to 1000 * 60 when handed in
 
 class Washer extends React.Component {
@@ -29,13 +29,18 @@ class Washer extends React.Component {
     if (this.timerID) clearInterval(this.timerID);
   }
 
+  /**
+   * Count the minutes.
+   * @param Nothing
+   * @returns Nothing
+   */
   timeOn() {
-    let mins = timeArray[this.props.order];
+    let mins = timeArray[this.props.order];                  // Get the time from timeArray.
     this.setState({
       time: mins
     });
-    this.timerID = setInterval(() => this.tick(), EXP_MIN);
-    this.timer = setTimeout(() => {
+    this.timerID = setInterval(() => this.tick(), EXP_MIN);  // Renew the counter.
+    this.timer = setTimeout(() => {                          // End the counter.
       this.setState({
         time: 0,
         user: 3,
@@ -45,8 +50,11 @@ class Washer extends React.Component {
     }, EXP_MIN * mins);
   }
 
+  /**
+   * Renew the time per EXP_MIN * ms.
+   */
   tick() {
-    if (this.state.time == 0) {
+    if (this.state.time == 0) {    // Clean the timerID to stop this.
       clearInterval(this.timerID);
       return;
     }
@@ -55,6 +63,11 @@ class Washer extends React.Component {
     }));
   }
 
+  /**
+   * Handle the click for button 'On'.
+   * @param {*Event for click} e
+   * Check wrong action and start timeOn().
+   */
   handleClickOn(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -81,6 +94,11 @@ class Washer extends React.Component {
     return;
   }
 
+  /**
+   * Handle click for button 'Get clothes'.
+   * @param {*event for click} e
+   * Check wrong action and set the washer.
+   */
   handelClickGetClothes(e) {
     e.stopPropagation();
     e.preventDefault();
