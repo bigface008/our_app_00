@@ -124,10 +124,10 @@ class Washer extends React.Component {
         </p>
         <p>
           {this.state.text}
-          <button className="On" onClick={this.handleClickOn} >On</button>
-          <button className="GetClothes" onClick={this.handelClickGetClothes}>
+          <a className="On" onClick={this.handleClickOn} >On</a>
+          <a className="GetClothes" onClick={this.handelClickGetClothes}>
             Get Clothes
-          </button>
+          </a>
         </p>
       </div>
     );
