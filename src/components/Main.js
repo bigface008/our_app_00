@@ -54,7 +54,7 @@ class Washer extends React.Component {
    * Renew the time per EXP_MIN * ms.
    */
   tick() {
-    if (this.state.time == 0) {    // Clean the timerID to stop this.
+    if (this.state.time === 0) {    // Clean the timerID to stop this.
       clearInterval(this.timerID);
       return;
     }
@@ -71,15 +71,15 @@ class Washer extends React.Component {
   handleClickOn(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (this.state.user == 1) {
+    if (this.state.user === 1) {
       alert('It is being used.');
       return;
     }
-    else if (this.state.user == 2) {
+    else if (this.state.user === 2) {
       alert('You\'ve already turn the washer on.');
       return;
     }
-    else if (this.state.user == 3) {
+    else if (this.state.user === 3) {
       alert('You need to get the clothes out.');
       return;
     }
@@ -102,11 +102,11 @@ class Washer extends React.Component {
   handelClickGetClothes(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (this.state.user == 2 || this.state.user == 1) {
+    if (this.state.user === 2 || this.state.user === 1) {
       alert('Don\' do this.');
       return;
     }
-    else if (this.state.user == 0) {
+    else if (this.state.user === 0) {
       alert('No clothes in the washer.');
     }
     this.setState({
@@ -115,32 +115,52 @@ class Washer extends React.Component {
     });
   }
 
+
   render() {
     return (
-      <div className="Washer">
-        Washer No.{this.props.order}
-        <p className="Clock">
-          Time: {this.state.time}
-        </p>
-        <p>
-          {this.state.text}
-          <a className="On" onClick={this.handleClickOn} >On</a>
-          <a className="GetClothes" onClick={this.handelClickGetClothes}>
-            Get Clothes
-          </a>
-        </p>
+        <div className="Washer" width="50%">
+          <p className="headline-main">
+            Washer No.{this.props.order}
+          </p>
+          <div className="main-content">
+            <p className="Clock">
+              Time: {this.state.time}
+            </p>
+            <p>
+              {this.state.text}
+              <br/><br/>
+              <button className="On" onClick={this.handleClickOn} >On</button>
+              <button className="GetClothes" onClick={this.handelClickGetClothes}>
+                Get Clothes
+              </button>
+            </p>
+          </div>
+        </div>
+    );
+  }
+
+  }
+
+class List extends React.Component {
+  render() {
+    return (
+      <div>
+        <div className="List">
+         <Washer order={0} />
+         <Washer order={1} />
+         <Washer order={2} />
+        </div>
       </div>
     );
   }
 }
 
-class List extends React.Component {
+class Title_Description extends React.Component {
   render() {
     return (
-      <div className="List">
-        <Washer order={0} />
-        <Washer order={1} />
-        <Washer order={2} />
+      <div className="left">
+        <p className="title">App of Washers</p>
+        <p className="description">your can use this app to see weather the washer is being used, and it can also remind your of getting clothes.</p>
       </div>
     );
   }
@@ -149,10 +169,14 @@ class List extends React.Component {
 class AppComponent extends React.Component {
   render() {
     return (
-      <List />
+      <div>
+        <Title_Description/>
+        <List/>
+      </div>
     );
   }
 }
+
 
 AppComponent.defaultProps = {
 };

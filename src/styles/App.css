@@ -1,7 +1,15 @@
 /* Base Application Styles */
 body {
-  color: #fff;
-  background: #222;
+  color: #000;
+  background-image: url('../images/background.jpg');
+  background-repeat: no-repeat;
+  background-size:100% 100%;
+  background-attachment: fixed;
+  font-family: "华文隶书";
+}
+
+p{
+  display:block;
 }
 
 .index img {
@@ -9,6 +17,39 @@ body {
   border-radius: 4px;
   background: #fff;
   display: block;
+}
+
+.title{
+  font-size: 4rem;
+  font-weight: 400;
+  text-align: center;
+  color: #3c3c3c;
+  margin: 10% 0 0 30%;
+}
+
+.description{
+  font-size: 2rem;
+  text-align: center;
+  margin: 48% 0 0 30%;
+}
+
+.left{
+  float:left;
+  width: 40%;
+}
+
+.headline-main {
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-align: center;
+  color: #3c3c3c;
+  margin: 4.5% 0 0 44%;
+}
+
+.main-content {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0 0 0 44%;
 }
 
 .index .notice {
