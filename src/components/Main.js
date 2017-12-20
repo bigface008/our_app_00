@@ -5,6 +5,7 @@ import React from 'react';
 
 let timeArray = [5, 45, 45]; // should be changed to 45 * 3
 const EXP_MIN = 1000; // should be changed to 1000 * 60 when handed in
+const WASHER_GROUP = [2,1,3];
 
 class Washer extends React.Component {
   constructor() {
@@ -16,7 +17,9 @@ class Washer extends React.Component {
       // 3 - not being used && clothes in washer
       user: 0,
       text: 'Not being used.',
-      time: 0
+      time: 0,
+      group: 0,
+      id: 0
     };
     this.handleClickOn = this.handleClickOn.bind(this);
     this.handelClickGetClothes = this.handelClickGetClothes.bind(this);
@@ -166,11 +169,32 @@ class Title_Description extends React.Component {
   }
 }
 
+class Group_Selector extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      selected_group:0
+    }
+  }
+  render(){
+    return(
+      <div className="left">  
+       <select className="group-selector">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="opel">Opel</option>
+        <option value="audi">Audi</option>
+      </select>
+     </div>
+    );
+  }
+}
+
 class AppComponent extends React.Component {
   render() {
     return (
       <div>
-        <Title_Description/>
+        <Group_Selector/>
         <List/>
       </div>
     );

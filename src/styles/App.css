@@ -1,7 +1,7 @@
 /* Base Application Styles */
 body {
   color: #000;
-  background-image: url('../images/background.jpg');
+  /* background-image: url('../images/background.jpg'); */
   background-repeat: no-repeat;
   background-size:100% 100%;
   background-attachment: fixed;
@@ -59,4 +59,9 @@ p{
   border: 1px solid #000;
   border-width: 1px 0;
   background: #666;
+}
+
+.group-selector{
+  text-align: center;
+  margin: 10% 0 0 30%;
 }
