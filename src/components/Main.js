@@ -8,18 +8,18 @@ const EXP_MIN = 1000; // should be changed to 1000 * 60 when handed in
 const WASHER_GROUP = [2,1,3];
 
 class Washer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       // 0 - not being used && no clothes in washer
       // 1 - someone else is using it
       // 2 - you are using it
       // 3 - not being used && clothes in washer
-      user: 0,
+      user: props.user,
       text: 'Not being used.',
-      time: 0,
-      group: 0,
-      id: 0
+      time: props.time,
+      group: props.group,
+      id: props.id
     };
     this.handleClickOn = this.handleClickOn.bind(this);
     this.handelClickGetClothes = this.handelClickGetClothes.bind(this);
@@ -123,7 +123,7 @@ class Washer extends React.Component {
     return (
         <div className="Washer" width="50%">
           <p className="headline-main">
-            Washer No.{this.props.order}
+            Washer No.{this.state.id}
           </p>
           <div className="main-content">
             <p className="Clock">
@@ -142,48 +142,48 @@ class Washer extends React.Component {
     );
   }
 
-  }
-
-class List extends React.Component {
-  render() {
-    return (
-      <div>
-        <div className="List">
-         <Washer order={0} />
-         <Washer order={1} />
-         <Washer order={2} />
-        </div>
-      </div>
-    );
-  }
 }
 
-class Title_Description extends React.Component {
-  render() {
-    return (
-      <div className="left">
-        <p className="title">App of Washers</p>
-        <p className="description">your can use this app to see weather the washer is being used, and it can also remind your of getting clothes.</p>
-      </div>
-    );
+function WasherList(props){
+  var tmp = [];
+  for(let i=0;i<WASHER_GROUP[props.group];i++){
+    tmp.push(
+    <Washer 
+     user={props.user}
+     time={props.time}
+     group={props.group}
+     id={props.id} />);
   }
+
+  return (
+    <div className="List">
+     {tmp}
+    </div> );
 }
+
 
 class Group_Selector extends React.Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       selected_group:0
-    }
+    };
+
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  handleChange(event) {
+    this.setState({selected_group: event.target.value});
+    this.props.onGroupChange(this.state.selected_group);
+  }
+
   render(){
     return(
       <div className="left">  
-       <select className="group-selector">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
-        <option value="audi">Audi</option>
+       <select className="group-selector" value={this.state.value} onChange={this.handleChange}>
+        <option value={0}>0</option>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
       </select>
      </div>
     );
@@ -191,11 +191,27 @@ class Group_Selector extends React.Component {
 }
 
 class AppComponent extends React.Component {
+  constructor(){
+    super();
+
+    selected_group:0;
+
+    this.handleGroupChange = this.handleGroupChange.bind(this);
+  }
+
+  handleGroupChange(group){
+    this.setState({selected_group:group});
+  }
+
   render() {
     return (
       <div>
-        <Group_Selector/>
-        <List/>
+        <Group_Selector onGroupChange={this.handleGroupChange}/>
+        <WasherList 
+          user={0}
+          time={0}
+          group={this.state.selected_group}
+          id={0}/>
       </div>
     );
   }
@@ -206,3 +222,32 @@ AppComponent.defaultProps = {
 };
 
 export default AppComponent;
+
+
+// class List extends React.Component {
+  
+//   render() {
+//     return (
+//       <div>
+//         <div className="List">
+//          <Washer 
+//           user={0}
+//           time={0}
+//           group={0}
+//           id={0} />
+//         </div>
+//       </div>
+//     );
+//   }
+// }
+
+// class Title_Description extends React.Component {
+//   render() {
+//     return (
+//       <div className="left">
+//         <p className="title">App of Washers</p>
+//         <p className="description">your can use this app to see weather the washer is being used, and it can also remind your of getting clothes.</p>
+//       </div>
+//     );
+//   }
+// }
