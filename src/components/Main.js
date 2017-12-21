@@ -148,11 +148,7 @@ function WasherList(props){
   var tmp = [];
   for(let i=0;i<WASHER_GROUP[props.group];i++){
     tmp.push(
-    <Washer 
-     user={props.user}
-     time={props.time}
-     group={props.group}
-     id={props.id} />);
+    <Washer user={0} time={0} group={props.group} id={i} />);
   }
 
   return (
@@ -160,6 +156,23 @@ function WasherList(props){
      {tmp}
     </div> );
 }
+
+// class List extends React.Component {
+  
+//   render() {
+//     return (
+//       <div>
+//         <div className="List">
+//          <Washer 
+//           user={0}
+//           time={0}
+//           group={0}
+//           id={0} />
+//         </div>
+//       </div>
+//     );
+//   }
+// }
 
 
 class Group_Selector extends React.Component {
@@ -173,8 +186,7 @@ class Group_Selector extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({selected_group: event.target.value});
-    this.props.onGroupChange(this.state.selected_group);
+    this.props.onGroupChange(event.target.value);
   }
 
   render(){
@@ -193,9 +205,9 @@ class Group_Selector extends React.Component {
 class AppComponent extends React.Component {
   constructor(){
     super();
-
-    selected_group:0;
-
+    this.state ={
+      selected_group:0
+    };
     this.handleGroupChange = this.handleGroupChange.bind(this);
   }
 
@@ -207,11 +219,7 @@ class AppComponent extends React.Component {
     return (
       <div>
         <Group_Selector onGroupChange={this.handleGroupChange}/>
-        <WasherList 
-          user={0}
-          time={0}
-          group={this.state.selected_group}
-          id={0}/>
+        <WasherList group={this.state.selected_group}/>
       </div>
     );
   }
@@ -224,22 +232,7 @@ AppComponent.defaultProps = {
 export default AppComponent;
 
 
-// class List extends React.Component {
-  
-//   render() {
-//     return (
-//       <div>
-//         <div className="List">
-//          <Washer 
-//           user={0}
-//           time={0}
-//           group={0}
-//           id={0} />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+
 
 // class Title_Description extends React.Component {
 //   render() {
