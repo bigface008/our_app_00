@@ -144,36 +144,6 @@ class Washer extends React.Component {
 
 }
 
-function WasherList(props){
-  var tmp = [];
-  for(let i=0;i<WASHER_GROUP[props.group];i++){
-    tmp.push(
-    <Washer user={0} time={0} group={props.group} id={i} />);
-  }
-
-  return (
-    <div className="List">
-     {tmp}
-    </div> );
-}
-
-// class List extends React.Component {
-  
-//   render() {
-//     return (
-//       <div>
-//         <div className="List">
-//          <Washer 
-//           user={0}
-//           time={0}
-//           group={0}
-//           id={0} />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
 
 class Group_Selector extends React.Component {
   constructor(props){
@@ -206,9 +176,27 @@ class AppComponent extends React.Component {
   constructor(){
     super();
     this.state ={
-      selected_group:0
+      selected_group:0,
+      washers:[]
     };
+
     this.handleGroupChange = this.handleGroupChange.bind(this);
+
+    // Init the washers, store all washers in this component
+    for(let i=0;i<WASHER_GROUP.length;i++){
+      let tmp = [];
+      for(let j=0;j<WASHER_GROUP[i];j++){
+        let washer = {
+          user:0,
+          text:'init',
+          time:0,
+          group:i,
+          id:j
+        };
+        tmp.push(washer);
+      }
+      this.state.washers.push(tmp);
+    }
   }
 
   handleGroupChange(group){
@@ -216,10 +204,20 @@ class AppComponent extends React.Component {
   }
 
   render() {
+    let tmp = [];
+    this.state.washers[this.state.selected_group].forEach(i => {
+      const w = (
+        <Washer user={i.user} time={i.time} group={this.state.selected_group} id={i.id} />
+      );
+      tmp.push(w);
+    });
+    
     return (
       <div>
         <Group_Selector onGroupChange={this.handleGroupChange}/>
-        <WasherList group={this.state.selected_group}/>
+        <div className="List">
+          {tmp}
+        </div> 
       </div>
     );
   }
@@ -240,6 +238,37 @@ export default AppComponent;
 //       <div className="left">
 //         <p className="title">App of Washers</p>
 //         <p className="description">your can use this app to see weather the washer is being used, and it can also remind your of getting clothes.</p>
+//       </div>
+//     );
+//   }
+// }
+
+
+// function WasherList(props){
+//   var tmp = [];
+//   for(let i=0;i<WASHER_GROUP[props.group];i++){
+//     tmp.push(
+//     <Washer user={0} time={0} group={props.group} id={i} />);
+//   }
+
+//   return (
+//     <div className="List">
+//      {tmp}
+//     </div> );
+// }
+
+// class List extends React.Component {
+  
+//   render() {
+//     return (
+//       <div>
+//         <div className="List">
+//          <Washer 
+//           user={0}
+//           time={0}
+//           group={0}
+//           id={0} />
+//         </div>
 //       </div>
 //     );
 //   }
