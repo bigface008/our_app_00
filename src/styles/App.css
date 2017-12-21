@@ -36,6 +36,7 @@ p{
 .left{
   float:left;
   width: 40%;
+  text-align: center;
 }
 
 .headline-main {
