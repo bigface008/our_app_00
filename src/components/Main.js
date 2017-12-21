@@ -74,27 +74,34 @@ class Washer extends React.Component {
   handleClickOn(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (this.state.user === 1) {
-      alert('It is being used.');
-      return;
-    }
-    else if (this.state.user === 2) {
-      alert('You\'ve already turn the washer on.');
-      return;
-    }
-    else if (this.state.user === 3) {
-      alert('You need to get the clothes out.');
-      return;
-    }
-    this.setState({
-      user: 2,
-      text: 'Being used.'
-    },
-      () => {
-        this.timeOn();
-      }
-    );
-    return;
+
+    const i = {
+      group:this.state.group,
+      id:this.state.id
+    };
+
+    this.props.onClickOn(i);
+    // if (this.state.user === 1) {
+    //   alert('It is being used.');
+    //   return;
+    // }
+    // else if (this.state.user === 2) {
+    //   alert('You\'ve already turn the washer on.');
+    //   return;
+    // }
+    // else if (this.state.user === 3) {
+    //   alert('You need to get the clothes out.');
+    //   return;
+    // }
+    // this.setState({
+    //   user: 2,
+    //   text: 'Being used.'
+    // },
+    //   () => {
+    //     this.timeOn();
+    //   }
+    // );
+    // return;
   }
 
   /**
@@ -105,17 +112,24 @@ class Washer extends React.Component {
   handelClickGetClothes(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (this.state.user === 2 || this.state.user === 1) {
-      alert('Don\' do this.');
-      return;
-    }
-    else if (this.state.user === 0) {
-      alert('No clothes in the washer.');
-    }
-    this.setState({
-      user: 0,
-      text: 'Not being used.'
-    });
+
+    const i = {
+      group:this.state.group,
+      id:this.state.id
+    };
+
+    this.props.onClickGet(i);
+    // if (this.state.user === 2 || this.state.user === 1) {
+    //   alert('Don\' do this.');
+    //   return;
+    // }
+    // else if (this.state.user === 0) {
+    //   alert('No clothes in the washer.');
+    // }
+    // this.setState({
+    //   user: 0,
+    //   text: 'Not being used.'
+    // });
   }
 
 
@@ -181,6 +195,9 @@ class AppComponent extends React.Component {
     };
 
     this.handleGroupChange = this.handleGroupChange.bind(this);
+    this.handleClickOn = this.handleClickOn.bind(this);
+    this.handleClickGet = this.handleClickGet.bind(this);
+    // this.tick = this.tick.bind(this);
 
     // Init the washers, store all washers in this component
     for(let i=0;i<WASHER_GROUP.length;i++){
@@ -199,15 +216,70 @@ class AppComponent extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
   handleGroupChange(group){
     this.setState({selected_group:group});
+  }
+
+  handleClickOn(e){
+    alert('click on');
+    const i = this.state.washers[e.group][e.id];
+    switch(i.user){
+      case 0:
+        this.state.washers[e.group][e.id].user=2;
+        this.state.washers[e.group][e.id].time=45;
+        break;
+      case 1:
+        alert('It is being used.');
+        break;
+      case 2:
+        alert('You\'ve already turn the washer on.');
+        break;
+      case 3:
+        alert('You need to get the clothes out.');
+        break;
+      default:
+        alert('Wrong user code!');
+    }
+  }
+
+  handleClickGet(e){
+    alert('click get');
+    if(this.state.washers[e.group][e.id].user==3){
+      this.state.washers[e.group][e.id].user=0;
+    }
+    else{
+      alert('error');
+    }
+  }
+
+  tick(){
+    this.state.washers.forEach(i =>{
+      i.forEach(w => {
+        if(w.user == 1 || w.user == 2){
+          w.time--;
+          if(w.time == 0)w.user=3;
+        }
+      });
+    });
   }
 
   render() {
     let tmp = [];
     this.state.washers[this.state.selected_group].forEach(i => {
       const w = (
-        <Washer user={i.user} time={i.time} group={this.state.selected_group} id={i.id} />
+        <Washer user={i.user} time={i.time} group={this.state.selected_group} id={i.id} 
+          onClickOn={this.handleClickOn} onClickGet={this.handleClickGet} />
       );
       tmp.push(w);
     });
