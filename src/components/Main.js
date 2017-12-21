@@ -11,10 +11,7 @@ class Washer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // 0 - not being used && no clothes in washer
-      // 1 - someone else is using it
-      // 2 - you are using it
-      // 3 - not being used && clothes in washer
+      mode: props.mode, // 0:empty 1:working 2:completed
       user: props.user,
       text: props.text,
       time: props.time,
@@ -27,59 +24,7 @@ class Washer extends React.Component {
     // this.tick = this.tick.bind(this);
   }
 
-  // componentWillUnmount() {
-  //   if (this.timer) clearTimeout(this.timer);
-  //   if (this.timerID) clearInterval(this.timerID);
-  // }
- 
-  // componentDidMount() {
-  //   this.timerID = setInterval(
-  //     () => this.tick(),
-  //     1000
-  //   );
-  // }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.timerID);
-  // }
-
-  // tick(){
-  //   console.log(this.state);
-
-  // }
-  /**
-   * Count the minutes.
-   * @param Nothing
-   * @returns Nothing
-   */
-  // timeOn() {
-  //   let mins = timeArray[this.props.order];                  // Get the time from timeArray.
-  //   this.setState({
-  //     time: mins
-  //   });
-  //   this.timerID = setInterval(() => this.tick(), EXP_MIN);  // Renew the counter.
-  //   this.timer = setTimeout(() => {                          // End the counter.
-  //     this.setState({
-  //       time: 0,
-  //       user: 3,
-  //       text: 'You can get your clothes.'
-  //     });
-  //     alert('Get your clothes.');
-  //   }, EXP_MIN * mins);
-  // }
-
-  /**
-   * Renew the time per EXP_MIN * ms.
-   */
-  // tick() {
-  //   if (this.state.time === 0) {    // Clean the timerID to stop this.
-  //     clearInterval(this.timerID);
-  //     return;
-  //   }
-  //   this.setState((prevState) => ({
-  //     time: prevState.time - 1
-  //   }));
-  // }
+  
 
   /**
    * Handle the click for button 'On'.
@@ -96,27 +41,7 @@ class Washer extends React.Component {
     };
 
     this.props.onClickOn(i);
-    // if (this.state.user === 1) {
-    //   alert('It is being used.');
-    //   return;
-    // }
-    // else if (this.state.user === 2) {
-    //   alert('You\'ve already turn the washer on.');
-    //   return;
-    // }
-    // else if (this.state.user === 3) {
-    //   alert('You need to get the clothes out.');
-    //   return;
-    // }
-    // this.setState({
-    //   user: 2,
-    //   text: 'Being used.'
-    // },
-    //   () => {
-    //     this.timeOn();
-    //   }
-    // );
-    // return;
+
   }
 
   /**
@@ -134,17 +59,6 @@ class Washer extends React.Component {
     };
 
     this.props.onClickGet(i);
-    // if (this.state.user === 2 || this.state.user === 1) {
-    //   alert('Don\' do this.');
-    //   return;
-    // }
-    // else if (this.state.user === 0) {
-    //   alert('No clothes in the washer.');
-    // }
-    // this.setState({
-    //   user: 0,
-    //   text: 'Not being used.'
-    // });
   }
 
 
@@ -189,12 +103,15 @@ class Group_Selector extends React.Component {
   }
 
   render(){
+    let tmp = [];
+    for(let i=0;i<WASHER_GROUP.length;i++)
+      tmp.push(
+        <option value={i}>{i}</option>
+      );
     return(
       <div className="left">  
        <select className="group-selector" value={this.state.value} onChange={this.handleChange}>
-        <option value={0}>0</option>
-        <option value={1}>1</option>
-        <option value={2}>2</option>
+        {tmp}
       </select>
      </div>
     );
@@ -220,7 +137,8 @@ class AppComponent extends React.Component {
       let tmp = [];
       for(let j=0;j<WASHER_GROUP[i];j++){
         let washer = {
-          user:0,
+          mode:0,
+          user:'',
           text:'init',
           time:0,
           group:i,
@@ -250,9 +168,9 @@ class AppComponent extends React.Component {
 
   handleClickOn(e){
     alert('click on',e.group,e.id);
-    switch(this.washers[e.group][e.id].user){
+    switch(this.washers[e.group][e.id].mode){
       case 0:
-        this.washers[e.group][e.id].user=2;
+        this.washers[e.group][e.id].mode=1;
         this.washers[e.group][e.id].time=45;
         this.washers[e.group][e.id].text='washing';
         console.log(this.washers);
@@ -263,18 +181,15 @@ class AppComponent extends React.Component {
       case 2:
         alert('You\'ve already turn the washer on.');
         break;
-      case 3:
-        alert('You need to get the clothes out.');
-        break;
       default:
-        alert('Wrong user code!');
+        alert('Wrong mode code!');
     }
   }
 
   handleClickGet(e){
     alert('click get');
-    if(this.washers[e.group][e.id].user==3){
-      this.washers[e.group][e.id].user=0;
+    if(this.washers[e.group][e.id].mode==2){
+      this.washers[e.group][e.id].mode=0;
       this.washers[e.group][e.id].text='init';
     }
     else{
@@ -285,37 +200,20 @@ class AppComponent extends React.Component {
   tick(){
     this.washers.forEach(i =>{
       i.forEach(w => {
-        if(w.user == 1 || w.user == 2){
+        if(w.mode == 1){
           w.time--;
-          if(w.time == 0)w.user=3;
+          if(w.time == 0)w.mode=2;
         }
       });
     });
     this.forceUpdate();
-    // this.setState((prevState) => ({
-    //   selected_group:prevState.selected_group
-    // }));
-    
-    // let tmp = [];
-    // this.washers[this.state.selected_group].forEach(i => {
-    //   const w = (
-    //     <Washer user={i.user} time={i.time} group={this.state.selected_group} id={i.id} 
-    //       onClickOn={this.handleClickOn} onClickGet={this.handleClickGet} />
-    //   );
-    //   tmp.push(w);
-    // });
-
-    // this.setState({
-    //   display:tmp
-    // });
   }
 
   render() {
     let tmp = [];
-    // console.log(this.washers[0][0]);
     this.washers[this.state.selected_group].forEach(i => {
       const w = (
-        <Washer key={i.group*100+i.id+i.time*1000}
+        <Washer key={i.group*100+i.id+i.time*1000} mode={i.mode}
           user={i.user} time={i.time} group={this.state.selected_group} id={i.id} text={i.text} 
           onClickOn={this.handleClickOn} onClickGet={this.handleClickGet} />
       );
@@ -324,8 +222,6 @@ class AppComponent extends React.Component {
     
     return (
       <div>
-        <p>{this.state.selected_group}</p>
-        <p>washer[0][0]:{this.washers[0][0].time}</p>
         <Group_Selector onGroupChange={this.handleGroupChange}/>
         <div className="List">
           {tmp}
@@ -341,47 +237,3 @@ AppComponent.defaultProps = {
 
 export default AppComponent;
 
-
-
-
-// class Title_Description extends React.Component {
-//   render() {
-//     return (
-//       <div className="left">
-//         <p className="title">App of Washers</p>
-//         <p className="description">your can use this app to see weather the washer is being used, and it can also remind your of getting clothes.</p>
-//       </div>
-//     );
-//   }
-// }
-
-
-// function WasherList(props){
-//   var tmp = [];
-//   for(let i=0;i<WASHER_GROUP[props.group];i++){
-//     tmp.push(
-//     <Washer user={0} time={0} group={props.group} id={i} />);
-//   }
-
-//   return (
-//     <div className="List">
-//      {tmp}
-//     </div> );
-// }
-
-// class List extends React.Component {
-  
-//   render() {
-//     return (
-//       <div>
-//         <div className="List">
-//          <Washer 
-//           user={0}
-//           time={0}
-//           group={0}
-//           id={0} />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
