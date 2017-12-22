@@ -35,7 +35,6 @@ p{
 
 .left{
   float:left;
-  width: 30%;
   text-align: center;
   background-color: #00b7ee;
 }
@@ -68,6 +67,7 @@ p{
   margin: 10% 0 0 30%;
 }
 
-.col-fluid{
-  background-color: #00b7ee;
+.Washer{
+  width: 100%;
+  text-align: center;
 }

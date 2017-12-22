@@ -3,6 +3,9 @@ require('styles/App.css');
 
 import React from 'react';
 
+import DropdownButton from 'react-bootstrap/lib/DropdownButton'
+import MenuItem from 'react-bootstrap/lib/MenuItem'
+
 export const WASHER_GROUP = [2, 1, 3];
 
 class Group_Selector extends React.Component {
@@ -15,22 +18,25 @@ class Group_Selector extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    this.props.onGroupChange(event.target.value);
+  handleChange(eventKey, event) {
+      console.log('select changes')
+    this.props.onGroupChange(eventKey);
   }
 
   render() {
     let tmp = [];
     for (let i = 0; i < WASHER_GROUP.length; i++)
       tmp.push(
-        <option key= {i} value={i}>{i}</option>
+        <MenuItem key={i} eventKey={i}>{i}</MenuItem>
       );
     return (
       <div>
         <p>Choose your group:</p>
-        <select value={this.state.value} onChange={this.handleChange}>
+        <DropdownButton 
+            title="Group" id="dropdown"
+            onSelect={this.handleChange}>
           {tmp}
-        </select>
+        </DropdownButton>
       </div>
     );
   }

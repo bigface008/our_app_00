@@ -5,6 +5,7 @@ import React from 'react';
 
 import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
+import Row from 'react-bootstrap/lib/Row'
 
 import Washer from '../components/Washer'
 import Group_Selector from '../components/Group_Selector'
@@ -133,14 +134,17 @@ class AppComponent extends React.Component {
     return (
       <div>
         <Grid fluid={true}>
-        <Col>
-          <Group_Selector onGroupChange={this.handleGroupChange} />
-          <p>User:{this.state.current_user}</p>
-          <Login onUserChange={this.handleUserChange }/>
-        </Col>
-        <Col>
-          {tmp}
-        </Col>
+          <Row>
+          <Col xs={6} md={4} className="left">
+            <Group_Selector onGroupChange={this.handleGroupChange} />
+            <p>User:{this.state.current_user}</p>
+            <Login onUserChange={this.handleUserChange }/>
+          </Col>
+          <Col xs={3} md={3} />
+          <Col xs={6} md={4}>
+            {tmp}
+          </Col>
+          </Row>
         </Grid>
       </div>
     );

@@ -1,4 +1,9 @@
 import React from 'react';
+
+import Button from 'react-bootstrap/lib/Button'
+import FormGroup from 'react-bootstrap/lib/FormGroup'
+import FormControl from 'react-bootstrap/lib/FormControl'
+
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 const USERS = [
     {
@@ -50,23 +55,17 @@ class Login extends React.Component{
     }
     render() {
     return <div>
-        <button onClick={this.handleClick}>Change User</button>
+        <Button onClick={this.handleClick}>Change User</Button>
           {
             this.state.isShowingModal &&
             <ModalContainer onClose={this.handleClose}>
               <ModalDialog>
                 <h3>Change user</h3>
-                <label>
-                    Username:
-                    <input type="text" value={this.state.value} onChange={this.handleUsernameChange} />
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <input type="text" value={this.state.value} onChange={this.handlePasswordChange} />
-                </label>
-                <br/>
-                <button onClick={this.handleClickLogin}>Login</button>
+                <FormGroup>
+                    <FormControl placeholder="Username" type="text" value={this.state.value} onChange={this.handleUsernameChange} />
+                    <FormControl placeholder="Password" type="text" value={this.state.value} onChange={this.handlePasswordChange} />
+                </FormGroup>
+                <Button onClick={this.handleClickLogin}>Login</Button>
               </ModalDialog>
             </ModalContainer>
           }

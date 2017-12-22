@@ -3,6 +3,9 @@ require('styles/App.css');
 
 import React from 'react';
 
+import Button from 'react-bootstrap/lib/Button'
+import Panel from 'react-bootstrap/lib/Panel'
+
 class Washer extends React.Component {
   constructor(props) {
     super(props);
@@ -60,7 +63,7 @@ class Washer extends React.Component {
 
   render() {
     return (
-      <div className="Washer" width="50%">
+      <Panel className="Washer">
         <p className="headline-main">
           Washer No.{this.state.id}
         </p>
@@ -71,13 +74,13 @@ class Washer extends React.Component {
           <p>
             {this.state.text}
             <br /><br />
-            <button className="On" onClick={this.handleClickOn} >On</button>
-            <button className="GetClothes" onClick={this.handelClickGetClothes}>
+            <Button bsStyle="primary" onClick={this.handleClickOn} >On</Button>
+            <Button bsStyle="primary" onClick={this.handelClickGetClothes}>
               Get Clothes
-                </button>
+            </Button>
           </p>
         </div>
-      </div>
+      </Panel>
     );
   }
 
