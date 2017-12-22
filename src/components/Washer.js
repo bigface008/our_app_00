@@ -4,6 +4,7 @@ require('styles/App.css');
 import React from 'react';
 
 import Button from 'react-bootstrap/lib/Button'
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
 import Panel from 'react-bootstrap/lib/Panel'
 
 class Washer extends React.Component {
@@ -64,21 +65,20 @@ class Washer extends React.Component {
   render() {
     return (
       <Panel className="Washer">
-        <p className="headline-main">
+        <p>
           Washer No.{this.state.id}
         </p>
-        <div className="main-content">
-          <p className="Clock">
+        <div>
+          <p>
             Time: {this.state.time}
           </p>
-          <p>
             {this.state.text}
-            <br /><br />
-            <Button bsStyle="primary" onClick={this.handleClickOn} >On</Button>
-            <Button bsStyle="primary" onClick={this.handelClickGetClothes}>
-              Get Clothes
-            </Button>
-          </p>
+            <ButtonToolbar>
+                <Button bsStyle="primary" onClick={this.handleClickOn} >On</Button>
+                <Button bsStyle="primary" onClick={this.handelClickGetClothes}>
+                Get Clothes
+                </Button>
+            </ButtonToolbar>
         </div>
       </Panel>
     );

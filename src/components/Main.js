@@ -6,6 +6,7 @@ import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
+import Affix from 'react-overlays/lib/Affix'
 
 import Washer from '../components/Washer'
 import Group_Selector from '../components/Group_Selector'
@@ -135,16 +136,21 @@ class AppComponent extends React.Component {
       <div>
         <Grid fluid={true}>
           <Row>
-          <Col xs={6} md={4} className="left">
+          <Col xs={3} md={3} className="left">
+            <h1 className="affix-title">洗衣机</h1>
+            <br/><br/><br/><br/><br/>
+            <Login defaultUser="admin" onUserChange={this.handleUserChange }/><br/>
             <Group_Selector onGroupChange={this.handleGroupChange} />
-            <p>User:{this.state.current_user}</p>
-            <Login onUserChange={this.handleUserChange }/>
           </Col>
-          <Col xs={3} md={3} />
-          <Col xs={6} md={4}>
+
+          <Col xs={1} md={1} />
+
+          <Col xs={6} md={6}>
+            <br/><br/>
             {tmp}
           </Col>
           </Row>
+          <Row />
         </Grid>
       </div>
     );

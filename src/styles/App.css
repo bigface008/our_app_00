@@ -5,69 +5,80 @@ body {
   background-repeat: no-repeat;
   background-size:100% 100%;
   background-attachment: fixed;
-  font-family: "华文隶书";
 }
 
-p{
+/* p{
   display:block;
-}
+} */
 
-.index img {
+/* .index img {
   margin: 40px auto;
   border-radius: 4px;
   background: #fff;
   display: block;
-}
+} */
 
-.title{
+/* .title{
   font-size: 4rem;
   font-weight: 400;
   text-align: center;
   color: #3c3c3c;
   margin: 10% 0 0 30%;
-}
+} */
 
-.description{
+/* .description{
   font-size: 2rem;
   text-align: center;
   margin: 48% 0 0 30%;
-}
+} */
 
 .left{
   float:left;
+  height:800px;
   text-align: center;
   background-color: #00b7ee;
 }
 
-.headline-main {
+/* .headline-main {
   font-size: 1.2rem;
   font-weight: 400;
   text-align: center;
   color: #3c3c3c;
   margin: 4.5% 0 0 44%;
-}
+} */
 
-.main-content {
+/* .main-content {
   font-size: 1.2rem;
   text-align: center;
   margin: 0 0 0 44%;
-}
+} */
 
-.index .notice {
+/* .index .notice {
   margin: 20px auto;
   padding: 15px 0;
   text-align: center;
   border: 1px solid #000;
   border-width: 1px 0;
   background: #666;
-}
+} */
 
 .group-selector{
-  text-align: center;
-  margin: 10% 0 0 30%;
+  width: 200px;
+  height: 40px;
 }
 
 .Washer{
   width: 100%;
   text-align: center;
+}
+
+.affix-title{
+  font-family: 'sans-serif';
+  font-size: 60px;
+  color: white;
+}
+
+.btn-change-user{
+  width: 200px;
+  height: 40px;
 }

@@ -3,8 +3,11 @@ import React from 'react';
 import Button from 'react-bootstrap/lib/Button'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
+import Tooltip from 'react-bootstrap/lib/Tooltip'
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
 
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
+
 const USERS = [
     {
         user:'admin',
@@ -16,18 +19,23 @@ const USERS = [
     }
 ];
 
+const tooltip = (
+    <Tooltip id="login-tooltip">点击以切换用户。</Tooltip>
+  );
+
 class Login extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            isShowingModal: false,
+            username:props.defaultUser,
+            btn_username:props.defaultUser,
+            password:''
+        }
         
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleClickLogin = this.handleClickLogin.bind(this);
-    }
-    state = {
-        isShowingModal: false,
-        username:'',
-        password:''
     }
     handleClick = () => this.setState({isShowingModal: true});
     handleClose = () => this.setState({isShowingModal: false});
@@ -44,7 +52,7 @@ class Login extends React.Component{
             if(element.user == name){
                 if(element.password == this.state.password){
                     this.props.onUserChange(this.state.username);
-                    this.setState({isShowingModal: false});
+                    this.setState({isShowingModal: false,btn_username:name});
                     isMatched = true;
                 }
             }
@@ -55,7 +63,9 @@ class Login extends React.Component{
     }
     render() {
     return <div>
-        <Button onClick={this.handleClick}>Change User</Button>
+            <OverlayTrigger placement="right" overlay={tooltip}>
+                <Button className="btn-change-user" onClick={this.handleClick}>User: {this.state.btn_username}</Button>
+            </OverlayTrigger>
           {
             this.state.isShowingModal &&
             <ModalContainer onClose={this.handleClose}>
