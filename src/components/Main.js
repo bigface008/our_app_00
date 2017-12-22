@@ -13,7 +13,7 @@ class AppComponent extends React.Component {
     super();
     this.state = {
       selected_group: 0,
-      display: 0
+      current_user:'admin'
     };
     this.washers = [];
 
@@ -96,7 +96,10 @@ class AppComponent extends React.Component {
         }
       });
     });
-    this.forceUpdate();
+    // this.forceUpdate();
+    this.setState((prev) => {
+      selected_group:prev.selected_group
+    });
   }
 
   render() {
@@ -113,6 +116,7 @@ class AppComponent extends React.Component {
     return (
       <div>
         <Group_Selector onGroupChange={this.handleGroupChange} />
+        <p>User:{this.state.current_user}</p>
         <div className="List">
           {tmp}
         </div>
