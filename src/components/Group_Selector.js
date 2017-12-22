@@ -26,7 +26,7 @@ class Group_Selector extends React.Component {
         <option key= {i} value={i}>{i}</option>
       );
     return (
-      <div className="left">
+      <div>
         <p>Choose your group:</p>
         <select value={this.state.value} onChange={this.handleChange}>
           {tmp}

@@ -35,8 +35,9 @@ p{
 
 .left{
   float:left;
-  width: 40%;
+  width: 30%;
   text-align: center;
+  background-color: #00b7ee;
 }
 
 .headline-main {
@@ -65,4 +66,8 @@ p{
 .group-selector{
   text-align: center;
   margin: 10% 0 0 30%;
+}
+
+.col-fluid{
+  background-color: #00b7ee;
 }

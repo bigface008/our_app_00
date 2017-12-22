@@ -3,6 +3,9 @@ require('styles/App.css');
 
 import React from 'react';
 
+import Grid from 'react-bootstrap/lib/Grid'
+import Col from 'react-bootstrap/lib/Col'
+
 import Washer from '../components/Washer'
 import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
@@ -129,12 +132,16 @@ class AppComponent extends React.Component {
 
     return (
       <div>
-        <Group_Selector onGroupChange={this.handleGroupChange} />
-        <p>User:{this.state.current_user}</p>
-        <Login onUserChange={this.handleUserChange }/>
-        <div className="List">
+        <Grid fluid={true}>
+        <Col>
+          <Group_Selector onGroupChange={this.handleGroupChange} />
+          <p>User:{this.state.current_user}</p>
+          <Login onUserChange={this.handleUserChange }/>
+        </Col>
+        <Col>
           {tmp}
-        </div>
+        </Col>
+        </Grid>
       </div>
     );
   }
