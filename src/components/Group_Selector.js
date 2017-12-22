@@ -23,7 +23,7 @@ class Group_Selector extends React.Component {
     let tmp = [];
     for (let i = 0; i < WASHER_GROUP.length; i++)
       tmp.push(
-        <option value={i}>{i}</option>
+        <option key= {i} value={i}>{i}</option>
       );
     return (
       <div className="left">

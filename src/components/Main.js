@@ -6,7 +6,9 @@ import React from 'react';
 import Washer from '../components/Washer'
 import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
+import Login from '../components/Login'
 
+const WASHING_TIME = 3;
 
 class AppComponent extends React.Component {
   constructor() {
@@ -18,6 +20,7 @@ class AppComponent extends React.Component {
     this.washers = [];
 
     this.handleGroupChange = this.handleGroupChange.bind(this);
+    this.handleUserChange = this.handleUserChange.bind(this);
     this.handleClickOn = this.handleClickOn.bind(this);
     this.handleClickGet = this.handleClickGet.bind(this);
     // this.tick = this.tick.bind(this);
@@ -52,16 +55,22 @@ class AppComponent extends React.Component {
     clearInterval(this.timerID);
   }
 
+  handleUserChange(name){
+    this.setState({
+      current_user:name
+    });
+  }
+
   handleGroupChange(group) {
     this.setState({ selected_group: group });
   }
 
   handleClickOn(e) {
-    alert('click on', e.group, e.id);
     switch (this.washers[e.group][e.id].mode) {
       case 0:
         this.washers[e.group][e.id].mode = 1;
-        this.washers[e.group][e.id].time = 45;
+        this.washers[e.group][e.id].time = WASHING_TIME;
+        this.washers[e.group][e.id].user = this.state.current_user;
         this.washers[e.group][e.id].text = 'washing';
         console.log(this.washers);
         break;
@@ -77,10 +86,15 @@ class AppComponent extends React.Component {
   }
 
   handleClickGet(e) {
-    alert('click get');
+    console.log(this.washers[0][0]);
     if (this.washers[e.group][e.id].mode == 2) {
-      this.washers[e.group][e.id].mode = 0;
-      this.washers[e.group][e.id].text = 'init';
+      if(this.washers[e.group][e.id].user == this.state.current_user){
+        this.washers[e.group][e.id].mode = 0;
+        this.washers[e.group][e.id].text = 'init';
+      }
+      else{
+        alert('This is not yours');
+      }
     }
     else {
       alert('error');
@@ -117,6 +131,7 @@ class AppComponent extends React.Component {
       <div>
         <Group_Selector onGroupChange={this.handleGroupChange} />
         <p>User:{this.state.current_user}</p>
+        <Login onUserChange={this.handleUserChange }/>
         <div className="List">
           {tmp}
         </div>
