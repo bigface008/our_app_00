@@ -70,24 +70,24 @@ class Washer extends React.Component {
     return (
       <Panel className="Washer">
         <Grid>
-            <Row>
-                <h1>Washer No.{this.state.id}</h1>
-            </Row>
-            <Row>
-                <p className="washer-text">Time: {this.state.time}</p>
-            </Row>
-            <Row>
-                <p className="washer-text">Current Status: {this.state.text}</p>
-            </Row>
-            <Row>
-                <Col xs={4} md={4}/>
-                <Col>
-                <ButtonToolbar>
-                    <Button onClick={this.handleClickOn} >On</Button>
-                    <Button onClick={this.handelClickGetClothes}>Get Clothes</Button>
-                </ButtonToolbar>
-                </Col>
-            </Row>
+          <Row>
+            <h1>Washer No.{this.state.id}</h1>
+          </Row>
+          <Row>
+            <p className="washer-text">Time: {this.state.time}</p>
+          </Row>
+          <Row>
+            <p className="washer-text">Current Status: {this.state.text}</p>
+          </Row>
+          <Row>
+            <Col xs={4} md={4} />
+            <Col>
+              <ButtonToolbar>
+                <Button onClick={this.handleClickOn} >On</Button>
+                <Button onClick={this.handelClickGetClothes}>Get Clothes</Button>
+              </ButtonToolbar>
+            </Col>
+          </Row>
         </Grid>
       </Panel>
     );
