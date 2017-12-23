@@ -5,7 +5,6 @@ import React from 'react';
 
 import Button from 'react-bootstrap/lib/Button'
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
-// import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Panel from 'react-bootstrap/lib/Panel'
 import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
@@ -18,12 +17,13 @@ class Washer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // 0 - not being used && no clothes in washer
-      // 1 - someone else is using it
-      // 2 - you are using it
-      // 3 - not being used && clothes in washer
+      /*
+        0 - not being used && no clothes in washer
+        1 - someone else is using it
+        2 - you are using it
+        3 - not being used && clothes in washer
+      */
       mode: 0,
-      // user: '',
       text: 'Not being used',
       time: 0,
       order: props.order
@@ -34,13 +34,18 @@ class Washer extends React.Component {
     this.tick = this.tick.bind(this);
   }
 
+  /**
+   * @function componentWillUnmount
+   * Clean the timerID when the component unmounted.
+   */
   componentWillUnmount() {
     if (this.timerID) clearInterval(this.timerID);
   }
 
   /**
-   * Handle the click for button 'On'.
+   * @function handleClickOn
    * @param {*Event for click} e
+   * Handle the click for button 'On'.
    * Check wrong action and start timeOn().
    */
   handleClickOn(e) {
@@ -73,6 +78,10 @@ class Washer extends React.Component {
     }
   }
 
+  /**
+   * @function timeOn
+   * Deal with the time when Button 'On' is pressed.
+   */
   timeOn() {
     this.timerID = setInterval(() => this.tick(), UNIT);
     this.timerOut = setTimeout(() => {
@@ -84,13 +93,12 @@ class Washer extends React.Component {
     }, MINTUES * UNIT);
   }
 
+  /**
+   * @function tick
+   * Renew the time per UNIT.
+   */
   tick() {
     if (this.state.time === 0) {
-      // this.setState({
-      //   time: 0,
-      //   mode: 3,
-      //   text: 'You should get clothes out.'
-      // });
       clearInterval(this.timerID);
       return;
     }
@@ -100,8 +108,9 @@ class Washer extends React.Component {
   }
 
   /**
-   * Handle click for button 'Get clothes'.
+   * @function handleClickGetClothes
    * @param {*event for click} e
+   * Handle click for button 'Get clothes'.
    * Check wrong action and set the washer.
    */
   handelClickGetClothes(e) {
@@ -125,7 +134,6 @@ class Washer extends React.Component {
         alert('Wrong mode code.');
     }
   }
-
 
   render() {
     return (
