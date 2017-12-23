@@ -15,6 +15,7 @@ import Login from '../components/Login'
 
 const WASHING_TIME = 5;
 const UNIT = 1000;
+const INFO_LIST = ['init', 'washing', 'finish'];
 
 class AppComponent extends React.Component {
   constructor() {
@@ -36,7 +37,7 @@ class AppComponent extends React.Component {
                */
               mode: 0,
               user: '',
-              text: 'init',
+              text: INFO_LIST[0],
               time: 0,
               group: i,
               id: j
@@ -85,7 +86,6 @@ class AppComponent extends React.Component {
           tmp[e.group][e.id].mode = 1;
           tmp[e.group][e.id].time = WASHING_TIME;
           tmp[e.group][e.id].user = this.state.current_user;
-          tmp[e.group][e.id].text = 'washing';
           this.setState({
             washers: tmp
           });
@@ -95,7 +95,7 @@ class AppComponent extends React.Component {
         alert('It is being used.');
         break;
       case 2:
-        alert('You\'ve already turn the washer on.');
+        alert('You\'should take out the clothes.');
         break;
       default:
         alert('Wrong mode code!');
@@ -108,7 +108,6 @@ class AppComponent extends React.Component {
         {
           let tmp = this.state.washers;
           tmp[e.group][e.id].mode = 0;
-          tmp[e.group][e.id].text = 'init';
           this.setState({
             washers: tmp
           });
@@ -133,6 +132,7 @@ class AppComponent extends React.Component {
           w.time--;
           if (w.time == 0) w.mode = 2;
         }
+        w.text = INFO_LIST[w.mode];
       });
     });
     this.setState((prev) => {
