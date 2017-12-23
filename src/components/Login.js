@@ -45,7 +45,7 @@ class Login extends React.Component{
     handlePasswordChange(e){
         this.setState({password: e.target.value});
     }
-    handleClickLogin(){
+    handleClickLogin(event){
         const name = this.state.username;
         let isMatched = false;
         USERS.forEach(element => {
@@ -60,6 +60,7 @@ class Login extends React.Component{
         if(!isMatched){
             alert('Wrong password or no such user');
         }
+        event.preventDefault();
     }
     render() {
     return <div>
@@ -70,12 +71,14 @@ class Login extends React.Component{
             this.state.isShowingModal &&
             <ModalContainer onClose={this.handleClose}>
               <ModalDialog>
+                <form onSubmit={this.handleClickLogin}>
                 <h3>Change user</h3>
                 <FormGroup>
                     <FormControl placeholder="Username" type="text" value={this.state.value} onChange={this.handleUsernameChange} />
                     <FormControl placeholder="Password" type="text" value={this.state.value} onChange={this.handlePasswordChange} />
                 </FormGroup>
-                <Button onClick={this.handleClickLogin}>Login</Button>
+                <Button type="submit" >Login</Button>
+                </form>
               </ModalDialog>
             </ModalContainer>
           }
