@@ -61,6 +61,7 @@ class Login extends React.Component {
             alert('Wrong password or no such user');
         }
         event.preventDefault();
+        event.stopPropagation();
     }
     render() {
         return <div>

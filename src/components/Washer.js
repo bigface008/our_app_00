@@ -11,24 +11,32 @@ import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
 
+const MINTUES = 5;
+const UNIT = 1000;
+
 class Washer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: props.mode, // 0:empty 1:working 2:completed
-      user: props.user,
-      text: props.text,
-      time: props.time,
-      group: props.group,
-      id: props.id
+      // 0 - not being used && no clothes in washer
+      // 1 - someone else is using it
+      // 2 - you are using it
+      // 3 - not being used && clothes in washer
+      mode: 0,
+      // user: '',
+      text: 'Not being used',
+      time: 0,
+      order: props.order
     };
     this.handleClickOn = this.handleClickOn.bind(this);
     this.handelClickGetClothes = this.handelClickGetClothes.bind(this);
-    // this.timeOn = this.timeOn.bind(this);
-    // this.tick = this.tick.bind(this);
+    this.timeOn = this.timeOn.bind(this);
+    this.tick = this.tick.bind(this);
   }
 
-
+  componentWillUnmount() {
+    if (this.timerID) clearInterval(this.timerID);
+  }
 
   /**
    * Handle the click for button 'On'.
@@ -38,14 +46,57 @@ class Washer extends React.Component {
   handleClickOn(e) {
     e.stopPropagation();
     e.preventDefault();
+    switch (this.state.mode) {
+      case 0:
+        this.setState({
+          mode: 2,
+          text: 'Being used.',
+          time: MINTUES
+        },
+          () => {
+            this.timeOn();
+          }
+        );
+        return;
+      case 1:
+        alert('It \'s being used.');
+        return;
+      case 2:
+        alert('You\'ve already turn the washer on.');
+        return;
+      case 3:
+        alert('You need to get the clothes out.');
+        return;
+      default:
+        alert('Wrong mode code.');
+        return;
+    }
+  }
 
-    const i = {
-      group: this.state.group,
-      id: this.state.id
-    };
+  timeOn() {
+    this.timerID = setInterval(() => this.tick(), UNIT);
+    this.timerOut = setTimeout(() => {
+      this.setState({
+        time: 0,
+        mode: 3,
+        text: 'You should get out the clothes.'
+      })
+    }, MINTUES * UNIT);
+  }
 
-    this.props.onClickOn(i);
-
+  tick() {
+    if (this.state.time === 0) {
+      // this.setState({
+      //   time: 0,
+      //   mode: 3,
+      //   text: 'You should get clothes out.'
+      // });
+      clearInterval(this.timerID);
+      return;
+    }
+    this.setState((prevState) => ({
+      time: prevState.time - 1
+    }));
   }
 
   /**
@@ -56,13 +107,23 @@ class Washer extends React.Component {
   handelClickGetClothes(e) {
     e.stopPropagation();
     e.preventDefault();
-
-    const i = {
-      group: this.state.group,
-      id: this.state.id
-    };
-
-    this.props.onClickGet(i);
+    switch (this.state.mode) {
+      case 1:
+      case 2:
+        alert('Don\'t do this.');
+        return;
+      case 0:
+        alert('No clothes in the washer.');
+        return;
+      case 3:
+        this.setState({
+          mode: 0,
+          text: 'Not being used.'
+        });
+        return;
+      default:
+        alert('Wrong mode code.');
+    }
   }
 
 
@@ -71,7 +132,7 @@ class Washer extends React.Component {
       <Panel className="Washer">
         <Grid>
           <Row>
-            <h1>Washer No.{this.state.id}</h1>
+            <h1>Washer No.{this.state.order}</h1>
           </Row>
           <Row>
             <p className="washer-text">Time: {this.state.time}</p>
