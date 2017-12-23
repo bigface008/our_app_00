@@ -68,8 +68,9 @@ body {
 }
 
 .Washer{
-  width: 100%;
-  text-align: center;
+  /* width: 100%; */
+  /* text-align: center; */
+  background-color: rgb(245, 245, 245);
 }
 
 .affix-title{
@@ -81,4 +82,8 @@ body {
 .btn-change-user{
   width: 200px;
   height: 40px;
+}
+
+.washer-text{
+  font-size: 15px;
 }

@@ -6,7 +6,7 @@ import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
-import Affix from 'react-overlays/lib/Affix'
+// import Affix from 'react-overlays/lib/Affix'
 
 import Washer from '../components/Washer'
 import Group_Selector from '../components/Group_Selector'

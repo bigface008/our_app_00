@@ -5,7 +5,11 @@ import React from 'react';
 
 import Button from 'react-bootstrap/lib/Button'
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
+// import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Panel from 'react-bootstrap/lib/Panel'
+import Grid from 'react-bootstrap/lib/Grid'
+import Col from 'react-bootstrap/lib/Col'
+import Row from 'react-bootstrap/lib/Row'
 
 class Washer extends React.Component {
   constructor(props) {
@@ -65,21 +69,26 @@ class Washer extends React.Component {
   render() {
     return (
       <Panel className="Washer">
-        <p>
-          Washer No.{this.state.id}
-        </p>
-        <div>
-          <p>
-            Time: {this.state.time}
-          </p>
-            {this.state.text}
-            <ButtonToolbar>
-                <Button bsStyle="primary" onClick={this.handleClickOn} >On</Button>
-                <Button bsStyle="primary" onClick={this.handelClickGetClothes}>
-                Get Clothes
-                </Button>
-            </ButtonToolbar>
-        </div>
+        <Grid>
+            <Row>
+                <h1>Washer No.{this.state.id}</h1>
+            </Row>
+            <Row>
+                <p className="washer-text">Time: {this.state.time}</p>
+            </Row>
+            <Row>
+                <p className="washer-text">Current Status: {this.state.text}</p>
+            </Row>
+            <Row>
+                <Col xs={4} md={4}/>
+                <Col>
+                <ButtonToolbar>
+                    <Button onClick={this.handleClickOn} >On</Button>
+                    <Button onClick={this.handelClickGetClothes}>Get Clothes</Button>
+                </ButtonToolbar>
+                </Col>
+            </Row>
+        </Grid>
       </Panel>
     );
   }
