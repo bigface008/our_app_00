@@ -76,9 +76,6 @@ class AppComponent extends React.Component {
             <Col xs={6} md={6}>
               <br /><br />
               {tmp}
-              {/* <Washer order={0} />
-              <Washer order={1} />
-              <Washer order={2} /> */}
             </Col>
           </Row>
           <Row />
