@@ -14,13 +14,14 @@ import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
 const WASHING_TIME = 3;
+const UNIT = 1000;
 
 class AppComponent extends React.Component {
   constructor() {
     super();
     this.state = {
       selected_group: 0,
-      current_user:'admin'
+      current_user: 'admin'
     };
     this.washers = [];
 
@@ -46,13 +47,13 @@ class AppComponent extends React.Component {
       }
       this.washers.push(tmp);
     }
-    console.log(this.washers);
+    // console.log(this.washers);
   }
 
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
-      1000
+      UNIT
     );
   }
 
@@ -60,9 +61,9 @@ class AppComponent extends React.Component {
     clearInterval(this.timerID);
   }
 
-  handleUserChange(name){
+  handleUserChange(name) {
     this.setState({
-      current_user:name
+      current_user: name
     });
   }
 
@@ -70,7 +71,13 @@ class AppComponent extends React.Component {
     this.setState({ selected_group: group });
   }
 
+  /**
+   * Handle click for the Washers' 'On' button.
+   * @param {*Event for click} e
+   */
   handleClickOn(e) {
+    e.stopPropagation();
+    e.preventDefault();
     switch (this.washers[e.group][e.id].mode) {
       case 0:
         this.washers[e.group][e.id].mode = 1;
@@ -90,14 +97,18 @@ class AppComponent extends React.Component {
     }
   }
 
+  /**
+   * Handle click for the Washers' '
+   * @param {*Event for click} e
+   */
   handleClickGet(e) {
     console.log(this.washers[0][0]);
     if (this.washers[e.group][e.id].mode == 2) {
-      if(this.washers[e.group][e.id].user == this.state.current_user){
+      if (this.washers[e.group][e.id].user == this.state.current_user) {
         this.washers[e.group][e.id].mode = 0;
         this.washers[e.group][e.id].text = 'init';
       }
-      else{
+      else {
         alert('This is not yours');
       }
     }
@@ -117,7 +128,7 @@ class AppComponent extends React.Component {
     });
     // this.forceUpdate();
     this.setState((prev) => {
-      selected_group:prev.selected_group
+      selected_group: prev.selected_group
     });
   }
 
@@ -136,19 +147,19 @@ class AppComponent extends React.Component {
       <div>
         <Grid fluid={true}>
           <Row>
-          <Col xs={3} md={3} className="left">
-            <h1 className="affix-title">洗衣机</h1>
-            <br/><br/><br/><br/><br/>
-            <Login defaultUser="admin" onUserChange={this.handleUserChange }/><br/>
-            <Group_Selector onGroupChange={this.handleGroupChange} />
-          </Col>
+            <Col xs={3} md={3} className="left">
+              <h1 className="affix-title">洗衣机</h1>
+              <br /><br /><br /><br /><br />
+              <Login defaultUser="admin" onUserChange={this.handleUserChange} /><br />
+              <Group_Selector onGroupChange={this.handleGroupChange} />
+            </Col>
 
-          <Col xs={1} md={1} />
+            <Col xs={1} md={1} />
 
-          <Col xs={6} md={6}>
-            <br/><br/>
-            {tmp}
-          </Col>
+            <Col xs={6} md={6}>
+              <br /><br />
+              {tmp}
+            </Col>
           </Row>
           <Row />
         </Grid>
