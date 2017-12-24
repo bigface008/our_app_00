@@ -32,6 +32,7 @@ class AppComponent extends React.Component {
               mode: 0, // 0:init 1:working 2:completed
               user: '',
               text: INFO_LIST[0],
+              info: 'Nothing.',
               time: 0,
               group: i,
               id: j
@@ -115,16 +116,20 @@ class AppComponent extends React.Component {
             tmp[group][id].mode = 1;
             tmp[group][id].time = WASHING_TIME;
             tmp[group][id].user = this.state.current_user;
-            this.setState({
-              washers: tmp
-            });
+            this.setState({ washers: tmp });
             return;
           }
         case 1:
-          alert('It is being used.');
+          {
+            let tmp = this.state.washers;
+            tmp[group][id].info = 'It is being used.';
+            this.setState({ washers: tmp });
+          }
           break;
         case 2:
-          alert('You should take out the clothes.');
+          let tmp = this.state.washers;
+          tmp[group][id].info = 'You should take out the clothes.';
+          this.setState({ washers: tmp });
           break;
         default:
           alert('Wrong mode code!');
@@ -152,19 +157,23 @@ class AppComponent extends React.Component {
           {
             let tmp = this.state.washers;
             tmp[group][id].mode = 0;
-            this.setState({
-              washers: tmp
-            });
+            this.setState({ washers: tmp });
             break;
           }
         case 1:
-          console.log('You can\'t take the clothes now.');
-          alert('You can\'t take the clothes now.');
-          break;
+          {
+            let tmp = this.state.washers;
+            tmp[group][id].info = 'You can\'t take the clothes now.';
+            this.setState({ washers: tmp });
+            break;
+          }
         case 0:
-          console.log('No clothes in the washer');
-          alert('No clothes in the washer');
-          break;
+          {
+            let tmp = this.state.washers;
+            tmp[group][id].info = 'No clothes in the washer.';
+            this.setState({ washers: tmp });
+            break;
+          }
         default:
           alert('Wrong mode code!');
       }
@@ -187,7 +196,10 @@ class AppComponent extends React.Component {
       i.forEach(w => {
         if (w.mode == 1) {
           w.time -= 100;
-          if (w.time == 0) w.mode = 2;
+          if (w.time == 0) {
+            w.mode = 2;
+            w.info = 'Nothing.';
+          }
         }
         w.text = INFO_LIST[w.mode];
       });
@@ -210,6 +222,7 @@ class AppComponent extends React.Component {
           group={this.state.selected_group}
           id={i.id}
           text={i.text}
+          info={i.info}
           onClickOn={this.handleClickOn(i.group, i.id)}
           onClickGet={this.handleClickGet(i.group, i.id)}
         />

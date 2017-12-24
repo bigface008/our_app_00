@@ -28,6 +28,7 @@ class Washer extends React.Component {
       user: props.user,
       text: props.text,
       time: props.time,
+      info: props.info,
       group: props.group,
       id: props.id
     };
@@ -69,6 +70,9 @@ class Washer extends React.Component {
           </Row>
           <Row>
             <p className="washer-text">Current Status: {this.state.text}</p>
+          </Row>
+          <Row>
+            <p className="washer-text">Info: {this.state.info}</p>
           </Row>
           <Row>
             <Col xs={4} md={4} />
