@@ -12,7 +12,7 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 45 * 60 * 100;
+const WASHING_TIME = 5 * 100 + 100;
 const UNIT = 1;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
@@ -94,7 +94,7 @@ class AppComponent extends React.Component {
         alert('It is being used.');
         break;
       case 2:
-        alert('You\'should take out the clothes.');
+        alert('You should take out the clothes.');
         break;
       default:
         alert('Wrong mode code!');
