@@ -45,10 +45,10 @@ class Washer extends React.Component {
     //   group: this.state.group,
     //   id: this.state.id
     // };
-    console.log('Run On');
-    this.props.onClickOn();
     e.stopPropagation();
     e.preventDefault();
+    console.log('Run On');
+    this.props.onClickOn();
   }
 
   /**
@@ -61,10 +61,10 @@ class Washer extends React.Component {
     //   group: this.state.group,
     //   id: this.state.id
     // };
-    console.log('Run get clothes');
-    this.props.onClickGet();
     e.stopPropagation();
     e.preventDefault();
+    console.log('Run get clothes');
+    this.props.onClickGet();
   }
 
   render() {
@@ -93,7 +93,6 @@ class Washer extends React.Component {
       </Panel>
     );
   }
-
 }
 
 export default Washer;

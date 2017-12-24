@@ -53,7 +53,8 @@ class AppComponent extends React.Component {
 
   /**
    * @function componentDidMount
-   * Load a clock that renew the state of user and all washers per UNIT.
+   * Load a clock that renew the state of user and all washers
+   * per UNIT.
    */
   componentDidMount() {
     this.timerID = setInterval(
