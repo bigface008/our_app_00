@@ -12,7 +12,7 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 60 * 45 * 100 + 100;
+const WASHING_TIME = 5 * 100 + 100;
 const UNIT = 1;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
@@ -29,12 +29,7 @@ class AppComponent extends React.Component {
           let tmp = [];
           for (let j = 0; j < arr[i]; j++) {
             let washer = {
-              /**
-               * 0 - Not being used
-               * 1 - Being used
-               * 2 - Clothes
-               */
-              mode: 0,
+              mode: 0, // 0:empty 1:working 2:completed
               user: '',
               text: INFO_LIST[0],
               time: 0,
