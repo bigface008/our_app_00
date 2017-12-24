@@ -13,7 +13,7 @@ import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
 const WASHING_TIME = 45 * 60 * 100 + 100;
-const UNIT = 1000;
+const UNIT = 1;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
 class AppComponent extends React.Component {
