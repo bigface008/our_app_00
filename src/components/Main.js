@@ -99,7 +99,7 @@ class AppComponent extends React.Component {
    * @param {*group of clicked washer} group
    * @param {*id of clicked washer} id
    * Return func that handle Click for Button 'On'.
-   * -----------------------------
+   * ----------------------------------------------
    * if the washer is not working:
    *     Turn it on & set state.
    * if the washer is working:
@@ -142,7 +142,7 @@ class AppComponent extends React.Component {
    * @param {*group of clicked washer} group
    * @param {*id of clicked washer} id
    * Return func that handle Click for Button 'Get Clothes'.
-   * --------------------------------------
+   * -------------------------------------------------------
    * if the washer has clothes in it:
    *     Set state and return.
    * if the washer is working:
