@@ -12,7 +12,7 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 5 * 100;
+const WASHING_TIME = 60 * 45 * 100;
 const UNIT = 1000;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
