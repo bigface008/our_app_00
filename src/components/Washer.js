@@ -24,7 +24,7 @@ class Washer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: props.mode, // 0:empty 1:working 2:completed
+      mode: props.mode, // 0:empty 1:working 2:completed 3:don't work
       user: props.user,
       text: props.text,
       time: props.time,
@@ -32,7 +32,8 @@ class Washer extends React.Component {
       id: props.id
     };
     this.handleClickOn = this.handleClickOn.bind(this);
-    this.handelClickGetClothes = this.handelClickGetClothes.bind(this);
+    this.handleClickGetClothes = this.handleClickGetClothes.bind(this);
+    this.handleClickRepair = this.handleClickRepair.bind(this);
   }
 
   /**
@@ -58,7 +59,7 @@ class Washer extends React.Component {
    * @param {*event for click} e
    * Check wrong action and set the washer.
    */
-  handelClickGetClothes(e) {
+  handleClickGetClothes(e) {
     e.stopPropagation();
     e.preventDefault();
 
@@ -68,6 +69,18 @@ class Washer extends React.Component {
     };
 
     this.props.onClickGet(i);
+  }
+
+  handleClickRepair(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const i = {
+      group: this.state.group,
+      id: this.state.id
+    };
+
+    this.props.onClickRepair(i);
   }
 
   render() {
@@ -85,11 +98,15 @@ class Washer extends React.Component {
             <p className="washer-text">Current Status: {this.state.text}</p>
           </Row>
           <Row>
+            <p className="washer-text">User: {this.state.user}</p>
+          </Row>
+          <Row>
             <Col xs={4} md={4} />
             <Col>
               <ButtonToolbar>
                 <Button onClick={this.handleClickOn} >On</Button>
-                <Button onClick={this.handelClickGetClothes}>Get Clothes</Button>
+                <Button onClick={this.handleClickGetClothes}>Get Clothes</Button>
+                <Button onClick={this.handleClickRepair}>Misreport</Button>
               </ButtonToolbar>
             </Col>
           </Row>

@@ -14,7 +14,7 @@ import Login from '../components/Login'
 
 const WASHING_TIME = 60 * 45 * 100 + 100;
 const UNIT = 1;
-const INFO_LIST = ['init', 'washing', 'finish'];
+const INFO_LIST = ['init', 'washing', 'finish','repaired'];
 
 class AppComponent extends React.Component {
   constructor() {
@@ -33,6 +33,7 @@ class AppComponent extends React.Component {
                * 0 - Not being used
                * 1 - Being used
                * 2 - Clothes
+               * 3 - can't work;
                */
               mode: 0,
               user: '',
@@ -53,6 +54,7 @@ class AppComponent extends React.Component {
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleClickOn = this.handleClickOn.bind(this);
     this.handleClickGet = this.handleClickGet.bind(this);
+    this.handleClickRepair = this.handleClickRepair.bind(this);
     this.tick = this.tick.bind(this);
   }
 
@@ -128,6 +130,9 @@ class AppComponent extends React.Component {
       case 2:
         alert('You should take out the clothes.');
         break;
+      case 3:
+        alert('This washer can\'t work! Don\'t use it.');
+        break;
       default:
         alert('Wrong mode code!');
     }
@@ -163,11 +168,62 @@ class AppComponent extends React.Component {
       case 0:
         alert('No clothes in the washer');
         break;
+      case 3:
+        alert('This washer can\'t work! Don\'t use it.');
+        break;
       default:
         alert('Wrong mode code!');
     }
   }
 
+  handleClickRepair(e) {
+    switch (this.state.washers[e.group][e.id].mode) {
+      case 0:
+      {
+        let tmp = this.state.washers;
+        tmp[e.group][e.id].mode = 3;
+        tmp[e.group][e.id].time = 0;
+        tmp[e.group][e.id].user = '';
+        this.forceUpdate();
+        this.setState({
+          washers: tmp
+        });
+        alert('Think for your misreport, we will repair it soon.');
+        break;
+      }
+      case 1:
+      {
+        let tmp = this.state.washers;
+        tmp[e.group][e.id].mode = 3;
+        tmp[e.group][e.id].time = 0;
+        tmp[e.group][e.id].user = '';
+        this.forceUpdate();
+        this.setState({
+          washers: tmp
+        });
+        alert('Think for your misreport, we will repair it soon.');
+        break;
+      }
+      case 2:
+      {
+        let tmp = this.state.washers;
+        tmp[e.group][e.id].mode = 3;
+        tmp[e.group][e.id].time = 0;
+        tmp[e.group][e.id].user = '';
+        this.forceUpdate();
+        this.setState({
+          washers: tmp
+        });
+        alert('Think for your misreport, we will repair it soon.');
+        break;
+      }
+      case 3:
+        alert('It has been already misreported. ');
+        break;
+      default:
+        alert('Wrong mode code!');
+    }
+  }
   /**
    * @function tick
    * Renew the state of washers.
@@ -209,6 +265,7 @@ class AppComponent extends React.Component {
           text={i.text}
           onClickOn={this.handleClickOn}
           onClickGet={this.handleClickGet}
+          onClickRepair ={this.handleClickRepair}
         />
       );
       tmp.push(w);
