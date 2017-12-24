@@ -6,15 +6,14 @@ import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
-// import Affix from 'react-overlays/lib/Affix'
 
 import Washer from '../components/Washer'
 import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 5;
-const UNIT = 1000;
+const WASHING_TIME = 45 * 60 * 100;
+const UNIT = 1;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
 class AppComponent extends React.Component {
@@ -108,6 +107,7 @@ class AppComponent extends React.Component {
         {
           let tmp = this.state.washers;
           tmp[e.group][e.id].mode = 0;
+          this.forceUpdate();
           this.setState({
             washers: tmp
           });
@@ -145,9 +145,17 @@ class AppComponent extends React.Component {
     let tmp = [];
     this.state.washers[this.state.selected_group].forEach(i => {
       const w = (
-        <Washer key={i.group * 100 + i.id + i.time * 1000} mode={i.mode}
-          user={i.user} time={i.time} group={this.state.selected_group} id={i.id} text={i.text}
-          onClickOn={this.handleClickOn} onClickGet={this.handleClickGet} />
+        <Washer
+          key={i.group * 100 + i.id + i.time * 1000}
+          mode={i.mode}
+          user={i.user}
+          time={i.time}
+          group={this.state.selected_group}
+          id={i.id}
+          text={i.text}
+          onClickOn={this.handleClickOn}
+          onClickGet={this.handleClickGet}
+        />
       );
       tmp.push(w);
     });

@@ -5,11 +5,20 @@ import React from 'react';
 
 import Button from 'react-bootstrap/lib/Button'
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
-// import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Panel from 'react-bootstrap/lib/Panel'
 import Grid from 'react-bootstrap/lib/Grid'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
+
+function showTime(time) {
+  let tmp = [];
+  let sec = Math.floor(time / 100);
+  let min = Math.floor(sec / 60);
+  sec = sec - min * 60;
+  tmp.push(min);
+  tmp.push(sec);
+  return tmp;
+}
 
 class Washer extends React.Component {
   constructor(props) {
@@ -27,8 +36,6 @@ class Washer extends React.Component {
     // this.timeOn = this.timeOn.bind(this);
     // this.tick = this.tick.bind(this);
   }
-
-
 
   /**
    * Handle the click for button 'On'.
@@ -65,7 +72,6 @@ class Washer extends React.Component {
     this.props.onClickGet(i);
   }
 
-
   render() {
     return (
       <Panel className="Washer">
@@ -74,7 +80,8 @@ class Washer extends React.Component {
             <h1>Washer No.{this.state.id}</h1>
           </Row>
           <Row>
-            <p className="washer-text">Time: {this.state.time}</p>
+            <p className="washer-text">Time: {showTime(this.state.time)[0]}:{showTime(this.state.time)[1]}</p>
+            {/* <p className="washer-text">Time: {this.state.time}</p> */}
           </Row>
           <Row>
             <p className="washer-text">Current Status: {this.state.text}</p>
