@@ -41,16 +41,14 @@ class Washer extends React.Component {
    * Check wrong action and start timeOn().
    */
   handleClickOn(e) {
+    // const i = {
+    //   group: this.state.group,
+    //   id: this.state.id
+    // };
+    console.log('Run On');
+    this.props.onClickOn();
     e.stopPropagation();
     e.preventDefault();
-
-    const i = {
-      group: this.state.group,
-      id: this.state.id
-    };
-
-    this.props.onClickOn(i);
-
   }
 
   /**
@@ -59,15 +57,14 @@ class Washer extends React.Component {
    * Check wrong action and set the washer.
    */
   handelClickGetClothes(e) {
+    // const i = {
+    //   group: this.state.group,
+    //   id: this.state.id
+    // };
+    console.log('Run get clothes');
+    this.props.onClickGet();
     e.stopPropagation();
     e.preventDefault();
-
-    const i = {
-      group: this.state.group,
-      id: this.state.id
-    };
-
-    this.props.onClickGet(i);
   }
 
   render() {
@@ -79,7 +76,6 @@ class Washer extends React.Component {
           </Row>
           <Row>
             <p className="washer-text">Time: {showTime(this.state.time)[0]}:{showTime(this.state.time)[1]}</p>
-            {/* <p className="washer-text">Time: {this.state.time}</p> */}
           </Row>
           <Row>
             <p className="washer-text">Current Status: {this.state.text}</p>

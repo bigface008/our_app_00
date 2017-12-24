@@ -12,7 +12,7 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 60 * 45 * 100 + 100;
+const WASHING_TIME = 5 * 100 + 100;
 const UNIT = 1;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
@@ -109,28 +109,30 @@ class AppComponent extends React.Component {
    * if the washer has clothes in it:
    *     Warn and return.
    */
-  handleClickOn(e) {
-    switch (this.state.washers[e.group][e.id].mode) {
-      case 0:
-        {
-          let tmp = this.state.washers;
-          tmp[e.group][e.id].mode = 1;
-          tmp[e.group][e.id].time = WASHING_TIME;
-          tmp[e.group][e.id].user = this.state.current_user;
-          this.setState({
-            washers: tmp
-          });
-          return;
-        }
-      case 1:
-        alert('It is being used.');
-        break;
-      case 2:
-        alert('You should take out the clothes.');
-        break;
-      default:
-        alert('Wrong mode code!');
-    }
+  handleClickOn(group, id) {
+    return function () {
+      switch (this.state.washers[group][id].mode) {
+        case 0:
+          {
+            let tmp = this.state.washers;
+            tmp[group][id].mode = 1;
+            tmp[group][id].time = WASHING_TIME;
+            tmp[group][id].user = this.state.current_user;
+            this.setState({
+              washers: tmp
+            });
+            return;
+          }
+        case 1:
+          alert('It is being used.');
+          break;
+        case 2:
+          alert('You should take out the clothes.');
+          break;
+        default:
+          alert('Wrong mode code!');
+      }
+    }.bind(this);
   }
 
   /**
@@ -145,27 +147,30 @@ class AppComponent extends React.Component {
    * if the washer is not working and has no clothes:
    *     Warn and return.
    */
-  handleClickGet(e) {
-    switch (this.state.washers[e.group][e.id].mode) {
-      case 2:
-        {
-          let tmp = this.state.washers;
-          tmp[e.group][e.id].mode = 0;
-          this.forceUpdate();
-          this.setState({
-            washers: tmp
-          });
+  handleClickGet(group, id) {
+    return function () {
+      switch (this.state.washers[group][id].mode) {
+        case 2:
+          {
+            let tmp = this.state.washers;
+            tmp[group][id].mode = 0;
+            this.setState({
+              washers: tmp
+            });
+            break;
+          }
+        case 1:
+          console.log('SB');
+          alert('You can\'t take the clothes now.');
           break;
-        }
-      case 1:
-        alert('You can\'t take the clothes now.');
-        break;
-      case 0:
-        alert('No clothes in the washer');
-        break;
-      default:
-        alert('Wrong mode code!');
-    }
+        case 0:
+          console.log('SB');
+          alert('No clothes in the washer');
+          break;
+        default:
+          alert('Wrong mode code!');
+      }
+    }.bind(this);
   }
 
   /**
@@ -207,8 +212,8 @@ class AppComponent extends React.Component {
           group={this.state.selected_group}
           id={i.id}
           text={i.text}
-          onClickOn={this.handleClickOn}
-          onClickGet={this.handleClickGet}
+          onClickOn={this.handleClickOn(i.group, i.id)}
+          onClickGet={this.handleClickGet(i.group, i.id)}
         />
       );
       tmp.push(w);
