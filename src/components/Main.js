@@ -12,8 +12,8 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 60 * 45 * 100 + 100;
-const UNIT = 1;
+const WASHING_TIME =60 * 45 * 100 + 100;
+const UNIT = 1000;
 const INFO_LIST = ['init', 'washing', 'finish','repaired'];
 
 class AppComponent extends React.Component {
@@ -119,7 +119,7 @@ class AppComponent extends React.Component {
           tmp[e.group][e.id].mode = 1;
           tmp[e.group][e.id].time = WASHING_TIME;
           tmp[e.group][e.id].user = this.state.current_user;
-          this.setState({
+              this.setState({
             washers: tmp
           });
           return;
@@ -184,6 +184,8 @@ class AppComponent extends React.Component {
         tmp[e.group][e.id].mode = 3;
         tmp[e.group][e.id].time = 0;
         tmp[e.group][e.id].user = '';
+        tmp[e.group][e.id].text = INFO_LIST[3];
+
         this.forceUpdate();
         this.setState({
           washers: tmp
@@ -197,6 +199,7 @@ class AppComponent extends React.Component {
         tmp[e.group][e.id].mode = 3;
         tmp[e.group][e.id].time = 0;
         tmp[e.group][e.id].user = '';
+        tmp[e.group][e.id].text = INFO_LIST[3];
         this.forceUpdate();
         this.setState({
           washers: tmp
@@ -210,6 +213,7 @@ class AppComponent extends React.Component {
         tmp[e.group][e.id].mode = 3;
         tmp[e.group][e.id].time = 0;
         tmp[e.group][e.id].user = '';
+        tmp[e.group][e.id].text = INFO_LIST[3];
         this.forceUpdate();
         this.setState({
           washers: tmp
@@ -238,17 +242,19 @@ class AppComponent extends React.Component {
     let tmp = this.state.washers;
     tmp.forEach(i => {
       i.forEach(w => {
-        if (w.mode == 1) {
-          w.time--;
-          if (w.time == 0) w.mode = 2;
-        }
         w.text = INFO_LIST[w.mode];
+        if (w.mode == 1) {
+          w.time -=100;
+          if (w.time <= 0) w.mode = 2;
+        }
       });
     });
-    this.setState((prev) => {
-      washers: tmp
+    this.setState(prev => ({
+      washers: tmp,
       selected_group: prev.selected_group
-    });
+
+
+    }));
   }
 
   render() {
