@@ -95,8 +95,9 @@ class AppComponent extends React.Component {
 
   /**
    * @function handleClickOn
-   * @param {*Event for click} e
-   * Handle Click for Button 'On'.
+   * @param {*group of clicked washer} group
+   * @param {*id of clicked washer} id
+   * Return func that handle Click for Button 'On'.
    * -----------------------------
    * if the washer is not working:
    *     Turn it on & set state.
@@ -133,8 +134,9 @@ class AppComponent extends React.Component {
 
   /**
    * @function handleClickGet
-   * @param {*Event for click} e
-   * Handle Click for Button 'Get Clothes'.
+   * @param {*group of clicked washer} group
+   * @param {*id of clicked washer} id
+   * Return func that handle Click for Button 'Get Clothes'.
    * --------------------------------------
    * if the washer has clothes in it:
    *     Set state and return.

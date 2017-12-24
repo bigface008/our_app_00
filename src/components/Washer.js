@@ -41,13 +41,8 @@ class Washer extends React.Component {
    * Check wrong action and start timeOn().
    */
   handleClickOn(e) {
-    // const i = {
-    //   group: this.state.group,
-    //   id: this.state.id
-    // };
     e.stopPropagation();
     e.preventDefault();
-    console.log('Run On');
     this.props.onClickOn();
   }
 
@@ -57,13 +52,8 @@ class Washer extends React.Component {
    * Check wrong action and set the washer.
    */
   handelClickGetClothes(e) {
-    // const i = {
-    //   group: this.state.group,
-    //   id: this.state.id
-    // };
     e.stopPropagation();
     e.preventDefault();
-    console.log('Run get clothes');
     this.props.onClickGet();
   }
 
