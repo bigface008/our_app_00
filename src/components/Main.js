@@ -12,6 +12,10 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
+const WASHING_TIME = 60 * 45 * 100 + 100;
+const UNIT = 1;
+const INFO_LIST = ['init', 'washing', 'finish'];
+
 class AppComponent extends React.Component {
   constructor() {
     super();
@@ -25,9 +29,14 @@ class AppComponent extends React.Component {
           let tmp = [];
           for (let j = 0; j < arr[i]; j++) {
             let washer = {
+              /**
+               * 0 - Not being used
+               * 1 - Being used
+               * 2 - Clothes
+               */
               mode: 0,
               user: '',
-              text: 'init',
+              text: INFO_LIST[0],
               time: 0,
               group: i,
               id: j
@@ -42,22 +51,167 @@ class AppComponent extends React.Component {
 
     this.handleGroupChange = this.handleGroupChange.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
+    this.handleClickOn = this.handleClickOn.bind(this);
+    this.handleClickGet = this.handleClickGet.bind(this);
+    this.tick = this.tick.bind(this);
   }
 
+  /**
+   * @function componentDidMount
+   * Load a clock that renew the state of user and all washers per UNIT.
+   */
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      UNIT
+    );
+  }
+
+  /**
+   * @function componentWillUnmount
+   * Clean the clock.
+   */
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  /**
+   * @function handleUserChange
+   * @param {*Name of user} name
+   * Set the current user. This function will be called by the
+   * Login component.
+   */
   handleUserChange(name) {
     this.setState({
       current_user: name
     });
   }
 
+  /**
+   * @function handleGroupChange
+   * @param {*Index of selected group} group
+   * Set the current group. This function will be called by the
+   * Group_Selector component.
+   */
   handleGroupChange(group) {
     this.setState({ selected_group: group });
+  }
+
+  /**
+   * @function handleClickOn
+   * @param {*Event for click} e
+   * Handle Click for Button 'On'.
+   * -----------------------------
+   * if the washer is not working:
+   *     Turn it on & set state.
+   * if the washer is working:
+   *     Warn and return.
+   * if the washer has clothes in it:
+   *     Warn and return.
+   */
+  handleClickOn(e) {
+    switch (this.state.washers[e.group][e.id].mode) {
+      case 0:
+        {
+          let tmp = this.state.washers;
+          tmp[e.group][e.id].mode = 1;
+          tmp[e.group][e.id].time = WASHING_TIME;
+          tmp[e.group][e.id].user = this.state.current_user;
+          this.setState({
+            washers: tmp
+          });
+          return;
+        }
+      case 1:
+        alert('It is being used.');
+        break;
+      case 2:
+        alert('You should take out the clothes.');
+        break;
+      default:
+        alert('Wrong mode code!');
+    }
+  }
+
+  /**
+   * @function handleClickGet
+   * @param {*Event for click} e
+   * Handle Click for Button 'Get Clothes'.
+   * --------------------------------------
+   * if the washer has clothes in it:
+   *     Set state and return.
+   * if the washer is working:
+   *     Warn and return.
+   * if the washer is not working and has no clothes:
+   *     Warn and return.
+   */
+  handleClickGet(e) {
+    switch (this.state.washers[e.group][e.id].mode) {
+      case 2:
+        {
+          let tmp = this.state.washers;
+          tmp[e.group][e.id].mode = 0;
+          this.forceUpdate();
+          this.setState({
+            washers: tmp
+          });
+          break;
+        }
+      case 1:
+        alert('You can\'t take the clothes now.');
+        break;
+      case 0:
+        alert('No clothes in the washer');
+        break;
+      default:
+        alert('Wrong mode code!');
+    }
+  }
+
+  /**
+   * @function tick
+   * Renew the state of washers.
+   * ---------------------------
+   * if the washer is working:
+   *     time--;
+   *     if time == 0:
+   *         mode = 2;
+   * Renew the text at the same time.
+   */
+  tick() {
+    let tmp = this.state.washers;
+    tmp.forEach(i => {
+      i.forEach(w => {
+        if (w.mode == 1) {
+          w.time--;
+          if (w.time == 0) w.mode = 2;
+        }
+        w.text = INFO_LIST[w.mode];
+      });
+    });
+    this.setState((prev) => {
+      washers: tmp
+      selected_group: prev.selected_group
+    });
   }
 
   render() {
     let tmp = [];
     this.state.washers[this.state.selected_group].forEach(i => {
-      tmp.push(<Washer key={i.id} order={i.id} />);
+      const w = (
+        <Washer
+          key={i.group * 100 + i.id + i.time * 1000}
+          mode={i.mode}
+          user={i.user}
+          time={i.time}
+          group={this.state.selected_group}
+          id={i.id}
+          text={i.text}
+          onClickOn={this.handleClickOn}
+          onClickGet={this.handleClickGet}
+        />
+      );
+      tmp.push(w);
     });
 
     return (
