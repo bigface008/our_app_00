@@ -33,8 +33,6 @@ class Washer extends React.Component {
     };
     this.handleClickOn = this.handleClickOn.bind(this);
     this.handelClickGetClothes = this.handelClickGetClothes.bind(this);
-    // this.timeOn = this.timeOn.bind(this);
-    // this.tick = this.tick.bind(this);
   }
 
   /**

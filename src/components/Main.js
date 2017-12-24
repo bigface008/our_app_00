@@ -12,7 +12,7 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 5 * 100 + 100;
+const WASHING_TIME = 45 * 60 * 100 + 100;
 const UNIT = 1;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
@@ -56,6 +56,10 @@ class AppComponent extends React.Component {
     this.tick = this.tick.bind(this);
   }
 
+  /**
+   * @function componentDidMount
+   * Load a clock that renew the state of user and all washers per UNIT.
+   */
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
@@ -63,20 +67,45 @@ class AppComponent extends React.Component {
     );
   }
 
+  /**
+   * @function componentWillUnmount
+   * Clean the clock.
+   */
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
 
+  /**
+   * @function handleUserChange
+   * @param {*Name of user} name
+   * Set the current user. This function will be called by the
+   * Login component.
+   */
   handleUserChange(name) {
     this.setState({
       current_user: name
     });
   }
 
+  /**
+   * @function handleGroupChange
+   * @param {*Index of selected group} group
+   * Set the current group. This function will be called by the
+   * Group_Selector component.
+   */
   handleGroupChange(group) {
     this.setState({ selected_group: group });
   }
 
+  /**
+   * @function handleClickOn
+   * @param {*Event for click} e
+   * Handle Click for Button 'On'.
+   * if the washer is not working:
+   *     turn it on & set state
+   * if the washer is working:
+   *     warning
+   */
   handleClickOn(e) {
     switch (this.state.washers[e.group][e.id].mode) {
       case 0:
@@ -101,6 +130,13 @@ class AppComponent extends React.Component {
     }
   }
 
+  /**
+   * @function handleClickGet
+   * @param {*Event for click} e
+   * Handle Click for Button 'Get Clothes'.
+   * Check for the mode of selected washer and react in the right way:
+   * if
+   */
   handleClickGet(e) {
     switch (this.state.washers[e.group][e.id].mode) {
       case 2:
