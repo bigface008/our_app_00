@@ -12,7 +12,7 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 60 * 45 * 100;
+const WASHING_TIME = 5 * 100;
 const UNIT = 1000;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
@@ -127,9 +127,10 @@ class AppComponent extends React.Component {
           }
           break;
         case 2:
-          let tmp = this.state.washers;
-          tmp[group][id].info = 'You should take out the clothes.';
-          this.setState({ washers: tmp });
+          alert('You should take out the clothes.');
+          // let tmp = this.state.washers;
+          // tmp[group][id].info = 'You should take out the clothes.';
+          // this.setState({ washers: tmp });
           break;
         default:
           alert('Wrong mode code!');
@@ -169,9 +170,10 @@ class AppComponent extends React.Component {
           }
         case 0:
           {
-            let tmp = this.state.washers;
-            tmp[group][id].info = 'No clothes in the washer.';
-            this.setState({ washers: tmp });
+            alert('No clothes in the washer.');
+            // let tmp = this.state.washers;
+            // tmp[group][id].info = 'No clothes in the washer.';
+            // this.setState({ washers: tmp });
             break;
           }
         default:
