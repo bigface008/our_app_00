@@ -12,7 +12,7 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 45 * 60 * 100 + 100;
+const WASHING_TIME = 60 * 45 * 100 + 100;
 const UNIT = 1;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
@@ -101,10 +101,13 @@ class AppComponent extends React.Component {
    * @function handleClickOn
    * @param {*Event for click} e
    * Handle Click for Button 'On'.
+   * -----------------------------
    * if the washer is not working:
-   *     turn it on & set state
+   *     Turn it on & set state.
    * if the washer is working:
-   *     warning
+   *     Warn and return.
+   * if the washer has clothes in it:
+   *     Warn and return.
    */
   handleClickOn(e) {
     switch (this.state.washers[e.group][e.id].mode) {
@@ -134,8 +137,13 @@ class AppComponent extends React.Component {
    * @function handleClickGet
    * @param {*Event for click} e
    * Handle Click for Button 'Get Clothes'.
-   * Check for the mode of selected washer and react in the right way:
-   * if
+   * --------------------------------------
+   * if the washer has clothes in it:
+   *     Set state and return.
+   * if the washer is working:
+   *     Warn and return.
+   * if the washer is not working and has no clothes:
+   *     Warn and return.
    */
   handleClickGet(e) {
     switch (this.state.washers[e.group][e.id].mode) {
@@ -147,19 +155,29 @@ class AppComponent extends React.Component {
           this.setState({
             washers: tmp
           });
-          return;
+          break;
         }
       case 1:
         alert('You can\'t take the clothes now.');
-        return;
+        break;
       case 0:
         alert('No clothes in the washer');
-        return;
+        break;
       default:
         alert('Wrong mode code!');
     }
   }
 
+  /**
+   * @function tick
+   * Renew the state of washers.
+   * ---------------------------
+   * if the washer is working:
+   *     time--;
+   *     if time == 0:
+   *         mode = 2;
+   * Renew the text at the same time.
+   */
   tick() {
     let tmp = this.state.washers;
     tmp.forEach(i => {
