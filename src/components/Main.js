@@ -12,8 +12,8 @@ import Group_Selector from '../components/Group_Selector'
 import { WASHER_GROUP } from '../components/Group_Selector'
 import Login from '../components/Login'
 
-const WASHING_TIME = 45 * 60 * 100 + 100;
-const UNIT = 1;
+const WASHING_TIME = 60 * 45 * 100;
+const UNIT = 1000;
 const INFO_LIST = ['init', 'washing', 'finish'];
 
 class AppComponent extends React.Component {
@@ -186,7 +186,7 @@ class AppComponent extends React.Component {
     tmp.forEach(i => {
       i.forEach(w => {
         if (w.mode == 1) {
-          w.time--;
+          w.time -= 100;
           if (w.time == 0) w.mode = 2;
         }
         w.text = INFO_LIST[w.mode];
