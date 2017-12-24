@@ -29,12 +29,7 @@ class AppComponent extends React.Component {
           let tmp = [];
           for (let j = 0; j < arr[i]; j++) {
             let washer = {
-              /**
-               * 0 - Not being used
-               * 1 - Being used
-               * 2 - Clothes
-               */
-              mode: 0,
+              mode: 0, // 0:init 1:working 2:completed
               user: '',
               text: INFO_LIST[0],
               time: 0,
@@ -160,11 +155,11 @@ class AppComponent extends React.Component {
             break;
           }
         case 1:
-          console.log('SB');
+          console.log('You can\'t take the clothes now.');
           alert('You can\'t take the clothes now.');
           break;
         case 0:
-          console.log('SB');
+          console.log('No clothes in the washer');
           alert('No clothes in the washer');
           break;
         default:
